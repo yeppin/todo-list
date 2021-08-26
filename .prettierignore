@@ -1,0 +1,6 @@
+# Ignore dirs
+/node_modules
+/dist
+
+# Ignore files
+*.html
