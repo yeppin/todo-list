@@ -1,0 +1,14 @@
+# Dependencies
+/node_modules
+
+# Production
+/dist
+
+# Envs
+.env
+
+# Etc
+.DS_Store
+
+# Ide
+/.idea
