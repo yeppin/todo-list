@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-type filerProps = {
+type filterProps = {
   selected: boolean;
 };
 
@@ -38,7 +38,7 @@ const FilterContainer = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const Filter = styled.li<filerProps>`
+const Filter = styled.li<filterProps>`
   margin-right: 3px;
   padding: 5px;
   border: ${props => (props.selected ? `solid 1px #e2b9ff` : 'none')};
