@@ -6,6 +6,7 @@ import replace from '@rollup/plugin-replace';
 import external from 'rollup-plugin-peer-deps-external';
 import livereload from 'rollup-plugin-livereload';
 import commonjs from '@rollup/plugin-commonjs';
+import babel from '@rollup/plugin-babel';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
@@ -20,7 +21,8 @@ export default {
       preventAssignment: true,
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
-    resolve({ extensions }),
+    resolve({extensions}),
+    babel({plugins: ['@emotion'], presets: ['@emotion/babel-preset-css-prop']}),
     external(),
     typescript({
       rollupCommonJSResolveHack: true,

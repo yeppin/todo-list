@@ -1,13 +1,20 @@
-import styled from '@emotion/styled';
 import React from 'react';
+import Board from './pages/Board';
 
-const Button = styled.button`
-  width: 200px;
-  height: 50px;
-`;
+import { Global, css } from '@emotion/react';
 
-function App() {
-  return <Button>styled 됩니다.</Button>;
+export default function App() {
+  return (
+    <>
+      <Global styles={globalStyle} />
+      <Board></Board>
+    </>
+  );
 }
 
-export default App;
+const globalStyle = css`
+  body {
+    font-size: 14px;
+    background: #ccc;
+  }
+`;
