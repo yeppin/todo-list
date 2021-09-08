@@ -6,17 +6,7 @@ import TodosHeader from '../components/TodosHeader';
 import Todo from '../components/Todo';
 import TodosFooter from '../components/TodosFooter';
 
-const BoardLayout = styled.section`
-  margin: 0 auto;
-  max-width: 768px;
-  min-width: 500px;
-  background: #fff;
-  border-radius: 5px;
-`
-const TodoList = styled.div`
-`
-
-const Board = () => {
+export default function Board() {
   return (
     <BoardLayout>
       <Header />
@@ -27,6 +17,14 @@ const Board = () => {
       <TodosFooter />
     </BoardLayout>
   );
-};
+}
 
-export default Board;
+const BoardLayout = styled.section`
+  margin: 0 auto;
+  max-width: 768px;
+  min-width: 500px;
+  background: #fff;
+  border-radius: 5px;
+`;
+
+const TodoList = styled.div``;

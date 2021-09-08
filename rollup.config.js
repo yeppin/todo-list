@@ -21,8 +21,8 @@ export default {
       preventAssignment: true,
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
-    resolve({ extensions }),
-    babel({ plugins:['@emotion'], presets: ['@emotion/babel-preset-css-prop'] }),
+    resolve({extensions}),
+    babel({plugins: ['@emotion'], presets: ['@emotion/babel-preset-css-prop']}),
     external(),
     typescript({
       rollupCommonJSResolveHack: true,
