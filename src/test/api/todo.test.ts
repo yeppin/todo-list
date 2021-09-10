@@ -1,3 +1,4 @@
+import * as faker from 'faker';
 import {
   getTodos,
   createTodo,
@@ -27,26 +28,36 @@ describe('todo API', () => {
       value: localStorageMock,
     });
   });
+
+  const setUp = () => {
+    const content = faker.lorem.word();
+    const todo = createTodo(content);
+    return {
+      content,
+      todo,
+    };
+  };
+
   it('create todo', () => {
-    const todo = createTodo('정대윤');
+    const { todo } = setUp();
     const todos = getTodos();
     const finded = todos.find(t => todo.id === t.id);
     expect(finded).toEqual(todo);
   });
 
   it('update todo', () => {
-    const todo = createTodo('updated');
+    const { content, todo } = setUp();
     updateTodo({
       ...todo,
-      content: 'updated 윤',
+      content: content,
     });
     const todos = getTodos();
     const finded = todos.find(t => todo.id === t.id);
-    expect(finded?.content).toEqual('updated 윤');
+    expect(finded?.content).toEqual(content);
   });
 
   it('toggleTodo todo to completed', () => {
-    const todo = createTodo('completed');
+    const { todo } = setUp();
     toggleTodo({
       id: todo.id,
       completed: true,
@@ -58,7 +69,7 @@ describe('todo API', () => {
   });
 
   it('toggleTodo todo to uncompleted', () => {
-    const todo = createTodo('uncompleted');
+    const { todo } = setUp();
     toggleTodo({
       id: todo.id,
       completed: false,
@@ -70,7 +81,7 @@ describe('todo API', () => {
   });
 
   it('delete todo', () => {
-    const todo = createTodo('uncompleted');
+    const { todo } = setUp();
     deleteTodo(todo.id);
     const todos = getTodos();
     const finded = todos.find(t => todo.id === t.id);
