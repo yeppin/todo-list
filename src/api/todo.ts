@@ -78,13 +78,11 @@ const mapToggledTodos = ({
     if (todo.id !== id) {
       return todo;
     }
-    todo.completed = completed;
-    todo.updateDatetime = new Date().toString();
-    if (completed) {
-      todo.completedDatetime = new Date().toString();
-    } else {
-      todo.completedDatetime = null;
-    }
-    return todo;
+    return {
+      ...todo,
+      completed,
+      updateDatetime: new Date().toString(),
+      completedDatetime: completed ? new Date().toString() : null,
+    };
   });
 };
