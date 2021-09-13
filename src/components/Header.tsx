@@ -16,5 +16,6 @@ const Container = styled.header`
   h1 {
     margin: 0;
     font-size: 70px;
+    color: #ead7d7;
   }
 `;
