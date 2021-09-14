@@ -10,7 +10,7 @@ export default function TodosHeader() {
     <Container>
       <ToggleCheckAll checked={true} />
       <InputWrapper>
-        <Input placeholder="할일을 입력해 보세요!"></Input>
+        <Input placeholder="할일을 입력해 보세요!" />
       </InputWrapper>
     </Container>
   );
