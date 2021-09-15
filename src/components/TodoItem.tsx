@@ -1,15 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import * as api from '../api/todo';
+import { Todo } from '../types/Todo';
+import TodosHeader from './TodosHeader';
 
 type todoProps = {
   checked: boolean;
 };
 
-export default function Todo() {
+export default function TodoItem(props: Todo) {
+  const [edit, setEdit] = useState(false);
+  const [content, setContent] = useState(props.content);
+  const handleEditClick = () => {
+    setEdit(true);
+  };
+  const handleEditChange = (e: any) => {
+    setContent(e.target.value);
+  };
+  const handleEditSubmit = (e: any) => {
+    e.preventDefault;
+    api.updateTodo(props);
+    api.getTodos();
+    setEdit(false);
+  };
+  const handleDeleteClick = () => {
+    alert('정말 삭제하시겠습니까?');
+    api.deleteTodo(props.id);
+    api.getTodos();
+  };
   return (
     <Container>
-      <CheckBox checked={true}></CheckBox>
-      <Content checked={true}>내용이 들어겠습니다!</Content>
+      <CheckBox checked={false}></CheckBox>
+      {edit ? (
+        <form onSubmit={handleEditSubmit}>
+          <EditInput
+            onChange={handleEditChange}
+            type="text"
+            value={content}
+          ></EditInput>
+        </form>
+      ) : (
+        <>
+          <Content checked={false} onDoubleClick={handleEditClick}>
+            {content}
+          </Content>
+          <DeleteButton onClick={handleDeleteClick}>X</DeleteButton>
+        </>
+      )}
     </Container>
   );
 }
@@ -62,4 +99,21 @@ const Container = styled.div`
     font-weight: bold;
     color: red;
   }
+`;
+const DeleteButton = styled.span`
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 40px;
+  right: 40px;
+  bottom: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: red;
+`;
+const EditInput = styled.input`
+  width: calc(100% - 95px);
+  padding: 15px;
+  word-break: break-all;
+  color: #000;
 `;
