@@ -1,17 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from '@emotion/styled';
+import * as api from '../api/todo';
 
 type toggleCheckAllProps = {
   checked: boolean;
 };
 
 export default function TodosHeader() {
+  const [content, setContent] = useState('');
+  const handleChange=(e: any) => {
+    setContent(e.target.value);
+  }
+  const handleSubmit = () => {
+    api.createTodo(content);
+  }
   return (
     <Container>
       <ToggleCheckAll checked={true} />
-      <InputWrapper>
-        <Input placeholder="할일을 입력해 보세요!"></Input>
-      </InputWrapper>
+        <form onSubmit={handleSubmit}>
+            <Input value={content} onChange={handleChange} placeholder="할일을 입력해 보세요!"></Input>
+        </form>
     </Container>
   );
 }
