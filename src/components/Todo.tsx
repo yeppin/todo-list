@@ -1,15 +1,45 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styled from '@emotion/styled';
+import * as api from '../api/todo';
+import { Todo } from '../types/Todo';
+import TodosHeader from './TodosHeader';
 
 type todoProps = {
   checked: boolean;
 };
 
-export default function Todo() {
+export default function TodoItem(props: Todo) {
+  const [edit, setEdit] = useState(false);
+  const [content, setContent] = useState(props.content);
+  const handleEditClick = () => {
+    setEdit(true);
+  }
+  const handleEditChange=(e: any)=>{
+    setContent(e.target.value);
+  };
+  const handleEditSubmit=(e: any)=>{
+    e.preventDefault;
+    api.updateTodo(props);
+    api.getTodos();
+    setEdit(false);
+  }
+  const handleDeleteClick=()=>{
+    alert("정말 삭제하시겠습니까?");
+    api.deleteTodo(props.id);
+    api.getTodos();
+  }
   return (
     <Container>
-      <CheckBox checked={true}></CheckBox>
-      <Content checked={true}>내용이 들어겠습니다!</Content>
+        <CheckBox checked={false}></CheckBox>
+      { edit ? 
+        <form onSubmit={handleEditSubmit}>
+          <EditInput onChange={handleEditChange} type="text" value={content}></EditInput>
+        </form>
+      : <>
+        <Content checked={false} onDoubleClick={handleEditClick}>{content}</Content>
+        <DeleteButton onClick={handleDeleteClick}>X</DeleteButton>
+        </>
+      }
     </Container>
   );
 }
@@ -26,13 +56,31 @@ const CheckBox = styled.div<todoProps>`
       : `url('${UNCHECKED_IMAGE_URL}')`};
 `;
 
+const DeleteButton=styled.span`
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 40px;
+  right: 40px;
+  bottom: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: red;
+`
 const Content = styled.div<todoProps>`
   width: calc(100% - 95px);
   padding: 15px;
   word-break: break-all;
   color: ${props => (props.checked ? `#777` : `#000`)};
   text-decoration: ${props => (props.checked ? `line-through` : `none`)};
-`;
+  `;
+
+const EditInput = styled.input`
+  width: calc(100% - 95px);
+  padding: 15px;
+  word-break: break-all;
+  color: #000;
+`
 
 const Container = styled.div`
   position: relative;
@@ -46,20 +94,6 @@ const Container = styled.div`
     border: none;
   }
   &:hover {
-    &::after {
-      display: block;
-    }
-  }
-  &::after {
-    content: 'X';
-    position: absolute;
-    display: none;
-    width: 40px;
-    height: 40px;
-    right: 40px;
-    bottom: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    color: red;
+    
   }
 `;
