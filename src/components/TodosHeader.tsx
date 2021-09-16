@@ -1,27 +1,34 @@
 import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
-import { TodoContext } from '../context/context';
-import * as api from '../api/todo';
+import { useTodosDispatch } from '../contexts/TodosContext';
 
 type toggleCheckAllProps = {
   checked: boolean;
 };
 
 export default function TodosHeader() {
-  const [content, setContent] = useState('');
-  const handleChange = (e: any) => {
-    setContent(e.target.value);
+  const [task, setTask] = useState('');
+  const dispatch = useTodosDispatch();
+
+  const onChange = useCallback((e: any) => {
+    setTask(e.target.value);
+  }, []);
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    //api.createTodo(task);
+    dispatch({ type: 'CREATE', content: task });
+    setTask('');
   };
-  const handleSubmit = () => {
-    api.createTodo(content);
-  };
+
   return (
     <Container>
       <ToggleCheckAll checked={true} />
-      <InputWrapper onSubmit={handleSubmit}>
+      <InputWrapper onSubmit={onSubmit}>
         <Input
-          value={content}
-          onChange={handleChange}
+          value={task}
+          type="text"
+          onChange={onChange}
           placeholder="할일을 입력해 보세요!"
         ></Input>
       </InputWrapper>
