@@ -1,50 +1,65 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import * as api from '../api/todo';
-import { Todo } from '../types/Todo';
-import TodosHeader from './TodosHeader';
+import { useTodosDispatch, Todo } from '../contexts/TodosContext';
 
-type todoProps = {
-  checked: boolean;
+type TodoItemProps = {
+  todo: Todo;
 };
 
-export default function TodoItem(props: Todo) {
+export default function TodoItem({ todo }: TodoItemProps) {
+  const dispatch = useTodosDispatch();
   const [edit, setEdit] = useState(false);
-  const [content, setContent] = useState(props.content);
+  const [task, setTask] = useState(todo.content);
+  const { completed } = todo;
+
   const handleEditClick = () => {
     setEdit(true);
   };
   const handleEditChange = (e: any) => {
-    setContent(e.target.value);
+    setTask(e.target.value);
   };
-  const handleEditSubmit = (e: any) => {
+  const handleEditSubmit = (e: React.FormEvent) => {
     e.preventDefault;
-    api.updateTodo(props);
+    api.updateTodo(todo);
     api.getTodos();
     setEdit(false);
   };
-  const handleDeleteClick = () => {
+  const onRemove = () => {
+    dispatch({
+      type: 'REMOVE',
+      id: todo.id,
+    });
     alert('정말 삭제하시겠습니까?');
-    api.deleteTodo(props.id);
+    api.deleteTodo(todo.id);
     api.getTodos();
+    console.log('삭제돼랏');
   };
+
+  const onToggle = () => {
+    dispatch({
+      type: 'TOGGLE',
+      id: todo.id,
+    });
+  };
+
   return (
     <Container>
-      <CheckBox checked={false}></CheckBox>
+      <CheckBox completed={false} onClick={onToggle} />
       {edit ? (
         <form onSubmit={handleEditSubmit}>
           <EditInput
             onChange={handleEditChange}
             type="text"
-            value={content}
+            value={task}
           ></EditInput>
         </form>
       ) : (
         <>
-          <Content checked={false} onDoubleClick={handleEditClick}>
-            {content}
+          <Content completed={false} onDoubleClick={handleEditClick}>
+            {task}
           </Content>
-          <DeleteButton onClick={handleDeleteClick}>X</DeleteButton>
+          <DeleteButton onClick={onRemove}>X</DeleteButton>
         </>
       )}
     </Container>
@@ -53,22 +68,22 @@ export default function TodoItem(props: Todo) {
 
 const CHECKED_IMAGE_URL = `data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E`;
 const UNCHECKED_IMAGE_URL = `data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23ededed%22%20stroke-width%3D%223%22/%3E%3C/svg%3E`;
-const CheckBox = styled.div<todoProps>`
+const CheckBox = styled.div<TodoItemProps>`
   width: 40px;
   height: 40px;
   cursor: pointer;
-  background-image: ${props =>
-    props.checked
+  background-image: ${todo =>
+    todo.todo.completed
       ? `url('${CHECKED_IMAGE_URL}')`
       : `url('${UNCHECKED_IMAGE_URL}')`};
 `;
 
-const Content = styled.div<todoProps>`
+const Content = styled.div<TodoItemProps>`
   width: calc(100% - 95px);
   padding: 15px;
   word-break: break-all;
-  color: ${props => (props.checked ? `#777` : `#000`)};
-  text-decoration: ${props => (props.checked ? `line-through` : `none`)};
+  color: ${todo => (todo.todo.completed ? `#777` : `#000`)};
+  text-decoration: ${todo => (todo.todo.completed ? `line-through` : `none`)};
 `;
 
 const Container = styled.div`
@@ -86,18 +101,6 @@ const Container = styled.div`
     &::after {
       display: block;
     }
-  }
-  &::after {
-    content: 'X';
-    position: absolute;
-    display: none;
-    width: 40px;
-    height: 40px;
-    right: 40px;
-    bottom: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    color: red;
   }
 `;
 const DeleteButton = styled.span`
