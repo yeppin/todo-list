@@ -6,3 +6,5 @@ export type Todo = {
   updateDatetime?: string | null;
   completedDatetime?: string | null;
 };
+
+export type Status = 'All' | 'ING' | 'COMPLETE';

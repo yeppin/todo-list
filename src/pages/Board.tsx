@@ -5,16 +5,19 @@ import Header from '../components/Header';
 import TodosHeader from '../components/TodosHeader';
 import Todo from '../components/Todo';
 import TodosFooter from '../components/TodosFooter';
+import TodoProvider from '../contexts/todoContext';
 
 export default function Board() {
   return (
     <BoardLayout>
       <Header />
-      <TodosHeader />
-      <TodoList>
-        <Todo />
-      </TodoList>
-      <TodosFooter />
+      <TodoProvider>
+        <TodosHeader />
+        <TodoList>
+          <Todo />
+        </TodoList>
+        <TodosFooter />
+      </TodoProvider>
     </BoardLayout>
   );
 }
