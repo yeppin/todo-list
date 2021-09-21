@@ -9,9 +9,7 @@ export default function TodosHeader() {
   return (
     <Container>
       <ToggleCheckAll checked={true} />
-      <InputWrapper>
-        <Input placeholder="할일을 입력해 보세요!" />
-      </InputWrapper>
+      <Input placeholder="할일을 입력해 보세요!" />
     </Container>
   );
 }
@@ -40,12 +38,6 @@ const ToggleCheckAll = styled.button<toggleCheckAllProps>`
     color: ${props => (props.checked ? `#737373` : `#e6e6e6`)};
     content: '❯';
   }
-`;
-
-const InputWrapper = styled.div`
-  width: calc(100% - 95px);
-  height: 65px;
-  padding: 15px;
 `;
 
 const Input = styled.input`
