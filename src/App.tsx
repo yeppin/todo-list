@@ -14,8 +14,11 @@ export default function App() {
 
 const globalStyle = css`
   body {
+    background: #f5f5f5;
+    color: #4d4d4d;
     font-size: 14px;
-    background: #ccc;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 
   button {

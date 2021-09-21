@@ -20,7 +20,7 @@ export default function TodosFooter() {
 
 const Container = styled.div`
   position: relative;
-  padding: 10px 20px;
+  padding: 20px;
   color: #777;
 `;
 

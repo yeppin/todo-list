@@ -29,9 +29,9 @@ const CheckBox = styled.button<todoProps>`
 
 const Content = styled.div<todoProps>`
   flex: 1;
-  padding: 15px;
+  padding: 6px 18px;
   word-break: break-all;
-  color: ${props => (props.checked ? `#777` : `#000`)};
+  color: ${props => (props.checked ? `#d9d9d9` : 'inherit')};
   text-decoration: ${props => (props.checked ? `line-through` : `none`)};
 `;
 
@@ -39,13 +39,10 @@ const Container = styled.li`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 15px;
+  padding: 15px 5px;
   list-style: none;
   transition: color 0.2s ease-out;
   border-bottom: solid 1px #eee;
-  &:last-child {
-    border: none;
-  }
   &:hover {
     & button:last-child::after {
       display: block;

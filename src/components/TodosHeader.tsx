@@ -17,38 +17,32 @@ export default function TodosHeader() {
 const Container = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
-
+  max-width: 100%;
+  padding: 0 20px 20px;
   border-bottom: 1px solid #eee;
 `;
 
 const ToggleCheckAll = styled.button<toggleCheckAllProps>`
+  margin-right: 20px;
   transform: rotate(90deg);
-  margin-right: 5px;
-  width: 40px;
-  height: 100%;
-  position: relative;
+  font-size: 22px;
+  color: ${props => (props.checked ? `#777` : `#d9d9d9`)};
   &::before {
-    position: absolute;
-    width: 100%;
-    bottom: 50%;
-    left: 50%;
-    cursor: pointer;
-    font-size: 22px;
-    color: ${props => (props.checked ? `#737373` : `#e6e6e6`)};
     content: '❯';
   }
 `;
 
 const Input = styled.input`
-  font-size: 24px;
+  flex: 1;
   width: calc(100% - 20px);
-  height: calc(100% - 20px);
+  height: 44px;
   padding: 10px;
+  font-size: 20px;
   border-radius: 10px;
   border: solid 1px #e2b9ff;
   outline: none;
   &::placeholder {
     font-style: italic;
+    color: #d9d9d9;
   }
 `;
