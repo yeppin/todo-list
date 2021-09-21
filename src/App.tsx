@@ -17,4 +17,17 @@ const globalStyle = css`
     font-size: 14px;
     background: #ccc;
   }
+
+  button {
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    appearance: none;
+    box-shadow: none;
+    overflow: visible;
+    cursor: pointer;
+  }
 `;

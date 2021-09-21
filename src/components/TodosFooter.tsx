@@ -38,7 +38,7 @@ const FilterContainer = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const Filter = styled.li<filterProps>`
+const Filter = styled.button<filterProps>`
   margin-right: 3px;
   padding: 5px;
   border: ${props => (props.selected ? `solid 1px #e2b9ff` : 'none')};

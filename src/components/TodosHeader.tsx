@@ -24,7 +24,7 @@ const Container = styled.div`
   border-bottom: 1px solid #eee;
 `;
 
-const ToggleCheckAll = styled.div<toggleCheckAllProps>`
+const ToggleCheckAll = styled.button<toggleCheckAllProps>`
   transform: rotate(90deg);
   margin-right: 5px;
   width: 40px;
