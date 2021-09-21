@@ -27,7 +27,7 @@ const CheckBox = styled.div<todoProps>`
 `;
 
 const Content = styled.div<todoProps>`
-  width: calc(100% - 95px);
+  flex: 1;
   padding: 15px;
   word-break: break-all;
   color: ${props => (props.checked ? `#777` : `#000`)};
@@ -38,7 +38,6 @@ const Container = styled.li`
   position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
   padding: 15px;
   list-style: none;
   transition: color 0.2s ease-out;
@@ -53,12 +52,8 @@ const Container = styled.li`
   }
   &::after {
     content: 'X';
-    position: absolute;
     display: none;
-    width: 40px;
-    height: 40px;
-    right: 40px;
-    bottom: 10px;
+    margin-right: 18px;
     cursor: pointer;
     font-weight: bold;
     color: red;
