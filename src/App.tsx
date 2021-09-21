@@ -7,7 +7,7 @@ export default function App() {
   return (
     <>
       <Global styles={globalStyle} />
-      <Board></Board>
+      <Board />
     </>
   );
 }

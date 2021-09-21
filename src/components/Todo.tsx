@@ -8,8 +8,8 @@ type todoProps = {
 export default function Todo() {
   return (
     <Container>
-      <CheckBox checked={true}></CheckBox>
-      <Content checked={true}>내용이 들어겠습니다!</Content>
+      <CheckBox checked={true} />
+      <Content checked={true}>내용이 들어가겠습니다!</Content>
     </Container>
   );
 }
