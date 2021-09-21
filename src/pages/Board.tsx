@@ -30,4 +30,7 @@ const BoardLayout = styled.section`
   border-radius: 5px;
 `;
 
-const TodoList = styled.div``;
+const TodoList = styled.ul`
+  margin: 0;
+  padding: 0;
+`;

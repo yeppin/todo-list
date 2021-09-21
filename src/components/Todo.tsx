@@ -34,12 +34,13 @@ const Content = styled.div<todoProps>`
   text-decoration: ${props => (props.checked ? `line-through` : `none`)};
 `;
 
-const Container = styled.div`
+const Container = styled.li`
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
   padding: 15px;
+  list-style: none;
   transition: color 0.2s ease-out;
   border-bottom: solid 1px #eee;
   &:last-child {
