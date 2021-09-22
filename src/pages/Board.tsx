@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import Header from '../components/Header';
 import TodosHeader from '../components/TodosHeader';
-import TodoItem from '../components/TodoItem';
+import TodoList from '../components/TodoList';
 import TodosFooter from '../components/TodosFooter';
 import { Todo } from '../types/Todo';
 import * as api from '../api/todo';
@@ -29,15 +29,3 @@ const BoardLayout = styled.section`
   background: #fff;
   border-radius: 5px;
 `;
-
-const TodoList = () => {
-  const todos = useTodosState();
-
-  return (
-    <div>
-      {todos.map(todo => (
-        <TodoItem key={todo.id} todo={todo} />
-      ))}
-    </div>
-  );
-};
