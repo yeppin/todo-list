@@ -1,12 +1,10 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import Header from '../components/Header';
 import TodosHeader from '../components/TodosHeader';
 import TodoList from '../components/TodoList';
 import TodosFooter from '../components/TodosFooter';
-import { Todo } from '../types/Todo';
-import * as api from '../api/todo';
 import TodoProvider from '../contexts/todoContext';
 
 export default function Board() {
