@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-
 import Header from '../components/Header';
 import TodosHeader from '../components/TodosHeader';
-import Todo from '../components/Todo';
+import TodoList from '../components/TodoList';
 import TodosFooter from '../components/TodosFooter';
 import TodoProvider from '../contexts/todoContext';
 
@@ -13,9 +12,7 @@ export default function Board() {
       <Header />
       <TodoProvider>
         <TodosHeader />
-        <TodoList>
-          <Todo />
-        </TodoList>
+        <TodoList />
         <TodosFooter />
       </TodoProvider>
     </BoardLayout>
@@ -29,5 +26,3 @@ const BoardLayout = styled.section`
   background: #fff;
   border-radius: 5px;
 `;
-
-const TodoList = styled.div``;
