@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
-import { useTodosDispatch } from '../contexts/TodosContext';
+import { useTodoDispatch } from '../contexts/todoContext';
 
 type toggleCheckAllProps = {
   checked: boolean;
@@ -16,7 +16,6 @@ export default function TodosHeader() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    //api.createTodo(task);
     dispatch({ type: 'CREATE', content: task });
     setTask('');
   };
