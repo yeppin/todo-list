@@ -1,9 +1,11 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 import * as api from '../api/todo';
+import { useTodoState } from '../contexts/todoContext';
 
 export default function TodoList() {
-  const todos = api.getTodos();
+  //const todos = api.getTodos();
+  const todos = useTodoState();
 
   return (
     <ul>
