@@ -5,7 +5,7 @@ import { useTodoState } from '../contexts/todoContext';
 
 export default function TodoList() {
   //const todos = api.getTodos();
-  const todos = useTodoState();
+  const todos = useTodoState().todos;
 
   return (
     <ul>
