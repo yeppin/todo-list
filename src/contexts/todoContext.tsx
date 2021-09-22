@@ -8,7 +8,7 @@ type TodoState = {
 };
 
 type Action =
-  | { type: 'CREATE_TODO'; todo: Todo }
+  | { type: 'CREATE_TODO'; content: string }
   | { type: 'UPDATE_TODO'; todo: Todo }
   | { type: 'DELETE_TODO'; id: number }
   | { type: 'TOGGLE_COMPLETED'; id: number }
@@ -28,7 +28,7 @@ const reducer = (state: TodoState, action: Action): TodoState => {
       return {
         ...state,
         // TODO: todo가 생성 되었을 때 action.todo 값을 이용하여 todos 가 업데이트 되도록 수정하기
-        todo: action.todo,
+        //state.todos.content: action.content,
       };
     case 'UPDATE_TODO':
       return {
