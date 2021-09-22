@@ -25,10 +25,10 @@ const reducer = (state: TodoState, action: Action): TodoState => {
   switch (action.type) {
     case 'CREATE_TODO':
       const todos = api.getTodos();
+      const { content } = state.todos;
+      api.createTodo(content);
       return {
-        ...state,
-        // TODO: todo가 생성 되었을 때 action.todo 값을 이용하여 todos 가 업데이트 되도록 수정하기
-        //state.todos.content: action.content,
+        todos: [...state.todos, action.content],
       };
     case 'UPDATE_TODO':
       return {
@@ -58,7 +58,6 @@ const reducer = (state: TodoState, action: Action): TodoState => {
     default:
       throw new Error('Unhandled action');
   }
-  return state;
 };
 
 const TodoStateContext = createContext<TodoState | null>(null);
