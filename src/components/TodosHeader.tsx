@@ -7,17 +7,17 @@ type toggleCheckAllProps = {
 };
 
 export default function TodosHeader() {
-  const [task, setTask] = useState('');
-  const dispatch = useTodosDispatch();
+  const [value, setValue] = useState('');
+  const dispatch = useTodoDispatch();
 
   const onChange = useCallback((e: any) => {
-    setTask(e.target.value);
+    setValue(e.target.value);
   }, []);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch({ type: 'CREATE', content: task });
-    setTask('');
+    dispatch({ type: 'CREATE_TODO', content: value });
+    setValue('');
   };
 
   return (
@@ -25,11 +25,11 @@ export default function TodosHeader() {
       <ToggleCheckAll checked={true} />
       <InputWrapper onSubmit={onSubmit}>
         <Input
-          value={task}
+          value={value}
           type="text"
           onChange={onChange}
           placeholder="할일을 입력해 보세요!"
-        ></Input>
+        />
       </InputWrapper>
     </Container>
   );
