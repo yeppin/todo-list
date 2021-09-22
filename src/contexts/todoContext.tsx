@@ -1,6 +1,6 @@
 import React, { createContext, Dispatch, useContext, useReducer } from 'react';
-
 import { Todo, Status } from '../types/Todo';
+import * as api from '../api/todo';
 
 type TodoState = {
   todos: Todo[];
@@ -54,8 +54,9 @@ const reducer = (state: TodoState, action: Action): TodoState => {
         // TODO: status 가 바뀌었을 때 action.status 값을 이용하여 todos 가 업데이트 되도록 수정하기
         // todos:
       };
+    default:
+      throw new Error('Unhandled action');
   }
-  return state;
 };
 
 const TodoStateContext = createContext<TodoState | null>(null);
