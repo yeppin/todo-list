@@ -14,11 +14,14 @@ export default function TodosHeader() {
     setValue(e.target.value);
   }, []);
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch({ type: 'CREATE_TODO', content: value });
-    setValue('');
-  };
+  const onSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      dispatch({ type: 'CREATE_TODO', content: value });
+      setValue('');
+    },
+    [value],
+  );
 
   return (
     <Container>
