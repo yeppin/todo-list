@@ -12,12 +12,12 @@ import TodoProvider from '../contexts/todoContext';
 export default function Board() {
   return (
     <BoardLayout>
-      <TodosContextProvider>
+      <TodoProvider>
         <Header />
         <TodosHeader />
         <TodoList />
         <TodosFooter />
-      </TodosContextProvider>
+      </TodoProvider>
     </BoardLayout>
   );
 }
