@@ -1,45 +1,21 @@
-import React,{useState} from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import * as api from '../api/todo';
 import { Todo } from '../types/Todo';
-import TodosHeader from './TodosHeader';
 
 type todoProps = {
   checked: boolean;
 };
 
-export default function TodoItem(props: Todo) {
-  const [edit, setEdit] = useState(false);
-  const [content, setContent] = useState(props.content);
-  const handleEditClick = () => {
-    setEdit(true);
-  }
-  const handleEditChange=(e: any)=>{
-    setContent(e.target.value);
-  };
-  const handleEditSubmit=(e: any)=>{
-    e.preventDefault;
-    api.updateTodo(props);
-    api.getTodos();
-    setEdit(false);
-  }
-  const handleDeleteClick=()=>{
-    alert("정말 삭제하시겠습니까?");
-    api.deleteTodo(props.id);
-    api.getTodos();
-  }
+export type TodoItemProps = {
+  todo: Todo;
+};
+
+export default function TodoItem({ todo }: TodoItemProps) {
+  const { content, completed } = todo;
   return (
     <Container>
-        <CheckBox checked={false}></CheckBox>
-      { edit ? 
-        <form onSubmit={handleEditSubmit}>
-          <EditInput onChange={handleEditChange} type="text" value={content}></EditInput>
-        </form>
-      : <>
-        <Content checked={false} onDoubleClick={handleEditClick}>{content}</Content>
-        <DeleteButton onClick={handleDeleteClick}>X</DeleteButton>
-        </>
-      }
+      <CheckBox checked={completed}></CheckBox>
+      <Content checked={completed}>{content}</Content>
     </Container>
   );
 }
@@ -56,7 +32,7 @@ const CheckBox = styled.div<todoProps>`
       : `url('${UNCHECKED_IMAGE_URL}')`};
 `;
 
-const DeleteButton=styled.span`
+const DeleteButton = styled.span`
   position: absolute;
   display: block;
   width: 40px;
@@ -66,21 +42,22 @@ const DeleteButton=styled.span`
   cursor: pointer;
   font-weight: bold;
   color: red;
-`
+`;
+
 const Content = styled.div<todoProps>`
   width: calc(100% - 95px);
   padding: 15px;
   word-break: break-all;
   color: ${props => (props.checked ? `#777` : `#000`)};
   text-decoration: ${props => (props.checked ? `line-through` : `none`)};
-  `;
+`;
 
 const EditInput = styled.input`
   width: calc(100% - 95px);
   padding: 15px;
   word-break: break-all;
   color: #000;
-`
+`;
 
 const Container = styled.div`
   position: relative;
@@ -94,6 +71,5 @@ const Container = styled.div`
     border: none;
   }
   &:hover {
-    
   }
 `;

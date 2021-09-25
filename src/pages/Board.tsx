@@ -1,19 +1,20 @@
 import React from 'react';
 import styled from '@emotion/styled';
-
 import Header from '../components/Header';
 import TodosHeader from '../components/TodosHeader';
 import TodoList from '../components/TodoList';
-import TodoItem from '../components/Todo';
 import TodosFooter from '../components/TodosFooter';
+import TodoProvider from '../contexts/todoContext';
 
 export default function Board() {
   return (
     <BoardLayout>
       <Header />
-      <TodosHeader />
-      <TodoList/>
-      <TodosFooter />
+      <TodoProvider>
+        <TodosHeader />
+        <TodoList />
+        <TodosFooter />
+      </TodoProvider>
     </BoardLayout>
   );
 }
@@ -24,4 +25,4 @@ const BoardLayout = styled.section`
   min-width: 500px;
   background: #fff;
   border-radius: 5px;
-`; 
+`;
