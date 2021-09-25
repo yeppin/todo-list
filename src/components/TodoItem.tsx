@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Todo } from '../types/Todo';
+import { useTodoDispatch } from '../contexts/todoContext';
+import UpdateForm from './UpdateForm';
 
 type todoProps = {
   checked: boolean;
@@ -8,14 +10,25 @@ type todoProps = {
 
 export type TodoItemProps = {
   todo: Todo;
+  isEditing: boolean;
 };
 
-export default function TodoItem({ todo }: TodoItemProps) {
-  const { content, completed } = todo;
+export default function TodoItem({ todo, isEditing }: TodoItemProps) {
+  const { completed, content } = todo;
+  const [edit, setEdit] = useState(isEditing);
+  const handleDoubleClick = () => {
+    setEdit(true);
+  };
   return (
     <Container>
       <CheckBox checked={completed}></CheckBox>
-      <Content checked={completed}>{content}</Content>
+      {edit ? (
+        <UpdateForm todo={todo} isEditing={edit}></UpdateForm>
+      ) : (
+        <Content onDoubleClick={handleDoubleClick} checked={completed}>
+          {content}
+        </Content>
+      )}
     </Container>
   );
 }
@@ -52,13 +65,6 @@ const Content = styled.div<todoProps>`
   text-decoration: ${props => (props.checked ? `line-through` : `none`)};
 `;
 
-const EditInput = styled.input`
-  width: calc(100% - 95px);
-  padding: 15px;
-  word-break: break-all;
-  color: #000;
-`;
-
 const Container = styled.div`
   position: relative;
   display: flex;
@@ -69,7 +75,5 @@ const Container = styled.div`
   border-bottom: solid 1px #eee;
   &:last-child {
     border: none;
-  }
-  &:hover {
   }
 `;
