@@ -1,15 +1,21 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { Todo } from '../types/Todo';
 
 type todoProps = {
   checked: boolean;
 };
 
-export default function Todo() {
+export type TodoItemProps = {
+  todo: Todo;
+};
+
+export default function TodoItem({ todo }: TodoItemProps) {
+  const { content, completed } = todo;
   return (
     <Container>
-      <CheckBox checked={true} />
-      <Content checked={true}>내용이 들어가겠습니다!</Content>
+      <CheckBox checked={completed} />
+      <Content checked={completed}>{content}</Content>
       <Delete />
     </Container>
   );
