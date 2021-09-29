@@ -1,6 +1,7 @@
 import React, { createContext, Dispatch, useContext, useReducer } from 'react';
 
-import { Todo, Status } from '../types/Todo';
+import { Status, Todo } from '../types/Todo';
+import { getTodos, toggleTodo, toggleTodos } from '../api/todo';
 
 type TodoState = {
   todos: Todo[];
@@ -8,6 +9,7 @@ type TodoState = {
 };
 
 type Action =
+  | { type: 'GET_TODO' }
   | { type: 'CREATE_TODO'; content: string }
   | { type: 'UPDATE_TODO'; content: string }
   | { type: 'DELETE_TODO'; id: number }
@@ -23,6 +25,11 @@ const initialState = {
 
 const reducer = (state: TodoState, action: Action): TodoState => {
   switch (action.type) {
+    case 'GET_TODO':
+      return {
+        ...state,
+        todos: getTodos(),
+      };
     case 'CREATE_TODO':
       return {
         ...state,
