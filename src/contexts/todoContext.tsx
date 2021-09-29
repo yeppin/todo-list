@@ -14,6 +14,7 @@ type Action =
   | { type: 'UPDATE_TODO'; content: string }
   | { type: 'DELETE_TODO'; id: number }
   | { type: 'TOGGLE_COMPLETED'; id: number }
+  | { type: 'TOGGLE_ALL_COMPLETED'; completed: boolean }
   | { type: 'CHANGE_STATUS'; status: Status };
 
 type TodoDispatch = Dispatch<Action>;
@@ -52,6 +53,11 @@ const reducer = (state: TodoState, action: Action): TodoState => {
       return {
         ...state,
         todos: toggleTodo(action.id),
+      };
+    case 'TOGGLE_ALL_COMPLETED':
+      return {
+        ...state,
+        todos: toggleTodos(action.completed),
       };
     case 'CHANGE_STATUS':
       return {

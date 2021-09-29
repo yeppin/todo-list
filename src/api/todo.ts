@@ -45,6 +45,18 @@ export const toggleTodo = (id: number): Todo[] => {
   return toggledTodos;
 };
 
+export const toggleTodos = (completed: boolean): Todo[] => {
+  const todos = getTodos();
+  const toggledTodos = todos.map(todo => ({
+    ...todo,
+    completed,
+    updateDatetime: new Date().toString(),
+    completedDatetime: completed ? new Date().toString() : null,
+  }));
+  setTodoInLocalStorage(toggledTodos);
+  return toggledTodos;
+};
+
 export const deleteTodo = (_id: number): Todo[] => {
   const todos = getTodos();
   const deletedTodos = todos.filter(todo => todo.id !== _id);
