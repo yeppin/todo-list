@@ -8,8 +8,8 @@ type TodoState = {
 };
 
 type Action =
-  | { type: 'CREATE_TODO'; todo: Todo }
-  | { type: 'UPDATE_TODO'; todo: Todo }
+  | { type: 'CREATE_TODO'; content: string }
+  | { type: 'UPDATE_TODO'; content: string }
   | { type: 'DELETE_TODO'; id: number }
   | { type: 'TOGGLE_COMPLETED'; id: number }
   | { type: 'CHANGE_STATUS'; status: Status };
