@@ -1,15 +1,20 @@
 import React from 'react';
 import TodoItem from './TodoItem';
-import * as api from '../api/todo';
+import styled from '@emotion/styled';
 
 export default function TodoList() {
   const todos = api.getTodos();
 
   return (
-    <ul>
+    <Todos>
       {todos.map(todo => (
         <TodoItem key={todo.id} todo={todo} />
       ))}
-    </ul>
+    </Todos>
   );
 }
+
+const Todos = styled.ul`
+  margin: 0;
+  padding: 0;
+`;
