@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { useTodoDispatch } from '../contexts/todoContext';
 import { Todo } from '../types/Todo';
 
 type todoProps = {
@@ -11,10 +12,16 @@ export type TodoItemProps = {
 };
 
 export default function TodoItem({ todo }: TodoItemProps) {
-  const { content, completed } = todo;
+  const dispatch = useTodoDispatch();
+  const { id, completed, content } = todo;
+
+  const handleClick = () => {
+    dispatch({ type: 'TOGGLE_COMPLETED', id });
+  };
+
   return (
     <Container>
-      <CheckBox checked={completed} />
+      <CheckBox checked={completed} onClick={handleClick} />
       <Content checked={completed}>{content}</Content>
       <Delete />
     </Container>

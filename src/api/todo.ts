@@ -38,15 +38,9 @@ export const updateTodo = (_todo: Todo): Todo[] => {
   return updatedTodos;
 };
 
-export const toggleTodo = ({
-  id,
-  completed,
-}: {
-  id: number;
-  completed: boolean;
-}): Todo[] => {
+export const toggleTodo = (id: number): Todo[] => {
   const todos = getTodos();
-  const toggledTodos = mapToggledTodos({ id, completed, todos });
+  const toggledTodos = mapToggledTodos({ id, todos });
   setTodoInLocalStorage(toggledTodos);
   return toggledTodos;
 };
@@ -70,11 +64,9 @@ const getTodoInLocalStorage = (): string | null => {
 
 const mapToggledTodos = ({
   id,
-  completed,
   todos,
 }: {
   id: number;
-  completed: boolean;
   todos: Todo[];
 }): Todo[] => {
   return todos.map(todo => {
@@ -83,9 +75,9 @@ const mapToggledTodos = ({
     }
     return {
       ...todo,
-      completed,
+      completed: !todo.completed,
       updateDatetime: new Date().toString(),
-      completedDatetime: completed ? new Date().toString() : null,
+      completedDatetime: !todo.completed ? new Date().toString() : null,
     };
   });
 };

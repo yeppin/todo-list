@@ -51,8 +51,7 @@ const reducer = (state: TodoState, action: Action): TodoState => {
     case 'TOGGLE_COMPLETED':
       return {
         ...state,
-        // TODO: todo의 completed 값이 토글 되었을 때 action.id 값을 이용하여 todos 가 업데이트 되도록 수정하기
-        // todos:
+        todos: toggleTodo(action.id),
       };
     case 'CHANGE_STATUS':
       return {
