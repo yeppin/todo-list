@@ -1,14 +1,24 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { useTodoDispatch, useTodoState } from '../contexts/todoContext';
 
 type toggleCheckAllProps = {
   checked: boolean;
 };
 
 export default function TodosHeader() {
+  const { todos } = useTodoState();
+  const dispatch = useTodoDispatch();
+
+  const isAllCompleted = todos.every(todo => todo.completed);
+
+  const handleAllCompleted = () => {
+    dispatch({ type: 'TOGGLE_ALL_COMPLETED', completed: !isAllCompleted });
+  };
+
   return (
     <Container>
-      <ToggleCheckAll checked={true} />
+      <ToggleCheckAll checked={isAllCompleted} onClick={handleAllCompleted} />
       <Input placeholder="할일을 입력해 보세요!" />
     </Container>
   );

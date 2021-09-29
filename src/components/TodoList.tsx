@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TodoItem from './TodoItem';
-import * as api from '../api/todo';
+import { useTodoDispatch, useTodoState } from '../contexts/todoContext';
+import styled from '@emotion/styled';
 
 export default function TodoList() {
-  const todos = api.getTodos();
+  const { todos } = useTodoState();
+  const dispatch = useTodoDispatch();
+
+  useEffect(() => {
+    dispatch({ type: 'GET_TODO' });
+  }, [dispatch]);
 
   return (
-    <ul>
+    <Todos>
       {todos.map(todo => (
         <TodoItem key={todo.id} todo={todo} />
       ))}
-    </ul>
+    </Todos>
   );
 }
+
+const Todos = styled.ul`
+  margin: 0;
+  padding: 0;
+`;
