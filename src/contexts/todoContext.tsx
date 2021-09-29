@@ -58,8 +58,8 @@ const reducer = (state: TodoState, action: Action): TodoState => {
   return state;
 };
 
-const TodoStateContext = createContext<TodoState | null>(null);
-const TodoDispatchContext = createContext<TodoDispatch | null>(null);
+const TodoStateContext = createContext<TodoState>(null as any);
+const TodoDispatchContext = createContext<TodoDispatch>(null as any);
 
 const TodoProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
