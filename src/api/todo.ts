@@ -8,7 +8,7 @@ export const getTodos = (): Todo[] => {
   return JSON.parse(todos);
 };
 
-export const createTodo = (content: string): Todo => {
+export const createTodo = (content: string): Todo[] => {
   const todos = getTodos();
   const todo = {
     content,
@@ -19,10 +19,10 @@ export const createTodo = (content: string): Todo => {
   todos.push(todo);
   setTodoInLocalStorage(todos);
   console.info(`✅ 뚜두 등록 성공`);
-  return todo;
+  return todos;
 };
 
-export const updateTodo = (_todo: Todo) => {
+export const updateTodo = (_todo: Todo): Todo[] => {
   const todos = getTodos();
   const updatedTodos = todos.map(todo => {
     if (todo.id !== _todo.id) {
@@ -35,6 +35,7 @@ export const updateTodo = (_todo: Todo) => {
   });
   setTodoInLocalStorage(updatedTodos);
   console.info(`✅ 뚜두 변경 성공`);
+  return updatedTodos;
 };
 
 export const toggleTodo = ({
@@ -43,17 +44,19 @@ export const toggleTodo = ({
 }: {
   id: number;
   completed: boolean;
-}) => {
+}): Todo[] => {
   const todos = getTodos();
   const toggledTodos = mapToggledTodos({ id, completed, todos });
   setTodoInLocalStorage(toggledTodos);
+  return toggledTodos;
 };
 
-export const deleteTodo = (_id: number) => {
+export const deleteTodo = (_id: number): Todo[] => {
   const todos = getTodos();
   const deletedTodos = todos.filter(todo => todo.id !== _id);
   setTodoInLocalStorage(deletedTodos);
   console.info(`✅ 뚜두 삭제 성공`);
+  return deletedTodos;
 };
 
 const setTodoInLocalStorage = (todos: Todo[]) => {
