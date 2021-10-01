@@ -1,6 +1,7 @@
-import React, { createContext, Dispatch, useContext, useReducer } from 'react';
-import { Status, Todo } from '../types/Todo';
 import * as api from '../api/todo';
+
+import React, { Dispatch, createContext, useContext, useReducer } from 'react';
+import { Status, Todo } from '../types/Todo';
 
 type TodoState = {
   todos: Todo[];
@@ -28,14 +29,13 @@ const reducer = (state: TodoState, action: Action): TodoState => {
     case 'GET_TODO':
       return {
         ...state,
-        todos: getTodos(),
+        todos: api.getTodos(),
       };
     case 'CREATE_TODO':
-      const todos = api.getTodos();
-      const { content } = state.todos;
-      api.createTodo(content);
       return {
-        todos: [...state.todos, action.content],
+        ...state,
+        // TODO: todo가 생성 되었을 때 action.todo 값을 이용하여 todos 가 업데이트 되도록 수정하기
+        // todos:
       };
     case 'UPDATE_TODO':
       return {
@@ -52,12 +52,12 @@ const reducer = (state: TodoState, action: Action): TodoState => {
     case 'TOGGLE_COMPLETED':
       return {
         ...state,
-        todos: toggleTodo(action.id),
+        todos: api.toggleTodo(action.id),
       };
     case 'TOGGLE_ALL_COMPLETED':
       return {
         ...state,
-        todos: toggleTodos(action.completed),
+        todos: api.toggleTodos(action.completed),
       };
     case 'CHANGE_STATUS':
       return {
