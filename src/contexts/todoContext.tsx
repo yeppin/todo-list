@@ -1,5 +1,5 @@
 import React, { createContext, Dispatch, useContext, useReducer } from 'react';
-import { Todo, Status } from '../types/Todo';
+import { Status, Todo } from '../types/Todo';
 import * as api from '../api/todo';
 
 type TodoState = {
@@ -8,10 +8,12 @@ type TodoState = {
 };
 
 type Action =
+  | { type: 'GET_TODO' }
   | { type: 'CREATE_TODO'; content: string }
-  | { type: 'UPDATE_TODO'; todo: Todo }
+  | { type: 'UPDATE_TODO'; content: string }
   | { type: 'DELETE_TODO'; id: number }
   | { type: 'TOGGLE_COMPLETED'; id: number }
+  | { type: 'TOGGLE_ALL_COMPLETED'; completed: boolean }
   | { type: 'CHANGE_STATUS'; status: Status };
 
 type TodoDispatch = Dispatch<Action>;
@@ -23,6 +25,11 @@ const initialState = {
 
 const reducer = (state: TodoState, action: Action): TodoState => {
   switch (action.type) {
+    case 'GET_TODO':
+      return {
+        ...state,
+        todos: getTodos(),
+      };
     case 'CREATE_TODO':
       const todos = api.getTodos();
       const { content } = state.todos;
@@ -45,8 +52,12 @@ const reducer = (state: TodoState, action: Action): TodoState => {
     case 'TOGGLE_COMPLETED':
       return {
         ...state,
-        // TODO: todo의 completed 값이 토글 되었을 때 action.id 값을 이용하여 todos 가 업데이트 되도록 수정하기
-        // todos:
+        todos: toggleTodo(action.id),
+      };
+    case 'TOGGLE_ALL_COMPLETED':
+      return {
+        ...state,
+        todos: toggleTodos(action.completed),
       };
     case 'CHANGE_STATUS':
       return {
@@ -60,8 +71,8 @@ const reducer = (state: TodoState, action: Action): TodoState => {
   }
 };
 
-const TodoStateContext = createContext<TodoState | null>(null);
-const TodoDispatchContext = createContext<TodoDispatch | null>(null);
+const TodoStateContext = createContext<TodoState>(null as any);
+const TodoDispatchContext = createContext<TodoDispatch>(null as any);
 
 const TodoProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);

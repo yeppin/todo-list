@@ -14,7 +14,23 @@ export default function App() {
 
 const globalStyle = css`
   body {
+    background: #f5f5f5;
+    color: #4d4d4d;
     font-size: 14px;
-    background: #ccc;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button {
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    appearance: none;
+    box-shadow: none;
+    overflow: visible;
+    cursor: pointer;
   }
 `;
