@@ -34,8 +34,7 @@ const reducer = (state: TodoState, action: Action): TodoState => {
     case 'CREATE_TODO':
       return {
         ...state,
-        // TODO: todo가 생성 되었을 때 action.todo 값을 이용하여 todos 가 업데이트 되도록 수정하기
-        // todos:
+        todos: api.createTodo(action.content),
       };
     case 'UPDATE_TODO':
       return {
