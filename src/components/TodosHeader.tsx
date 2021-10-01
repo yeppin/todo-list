@@ -16,7 +16,7 @@ export default function TodosHeader() {
     dispatch({ type: 'TOGGLE_ALL_COMPLETED', completed: !isAllCompleted });
   };
 
-  const onChange = useCallback((e: any) => {
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   }, []);
 
