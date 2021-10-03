@@ -32,9 +32,10 @@ const reducer = (state: TodoState, action: Action): TodoState => {
         todos: api.getTodos(),
       };
     case 'CREATE_TODO':
+      api.createTodo(action.content);
       return {
         ...state,
-        todos: api.createTodo(action.content),
+        todos: api.getTodos(),
       };
     case 'UPDATE_TODO':
       return {
