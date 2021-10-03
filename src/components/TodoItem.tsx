@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { useTodoDispatch } from '../contexts/todoContext';
 import { Todo } from '../types/Todo';
 import { useTodoDispatch } from '../contexts/todoContext';
 import UpdateForm from './UpdateForm';
@@ -17,6 +16,7 @@ export type TodoItemProps = {
 export default function TodoItem({ todo, isEditing }: TodoItemProps) {
   const dispatch = useTodoDispatch();
   const { id, completed, content } = todo;
+  const [updatedContent, setContent] = useState(content);
   const [edit, setEdit] = useState(isEditing);
   const handleClick = () => {
     dispatch({ type: 'TOGGLE_COMPLETED', id });
@@ -24,11 +24,25 @@ export default function TodoItem({ todo, isEditing }: TodoItemProps) {
   const handleDoubleClick = () => {
     setEdit(true);
   };
+
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContent(e.target.value);
+  };
+
+  const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault;
+    dispatch({ type: 'UPDATE_TODO', id, content: updatedContent });
+    setEdit(false);
+  };
   return (
     <Container>
       <CheckBox checked={completed} onClick={handleClick} />
       {edit ? (
-        <UpdateForm todo={todo} isEditing={edit}></UpdateForm>
+        <UpdateForm
+          editSubmit={handleEditSubmit}
+          editChange={handleEditChange}
+          content={updatedContent}
+        />
       ) : (
         <Content onDoubleClick={handleDoubleClick} checked={completed}>
           {content}

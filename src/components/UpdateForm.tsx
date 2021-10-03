@@ -1,26 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import { Todo } from '../types/Todo';
-import { useTodoDispatch } from '../contexts/todoContext';
-import { TodoItemProps } from './TodoItem';
 
-export default function UpdateForm({ todo, isEditing }: TodoItemProps) {
-  const dispatch = useTodoDispatch();
-  const [updateTodo, setState] = useState(todo);
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...updateTodo, content: e.target.value });
-  };
-  const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    dispatch({ type: 'UPDATE_TODO', todo: updateTodo });
-  };
-
+export default function UpdateForm(props: any) {
   return (
-    <form onSubmit={handleEditSubmit}>
+    <form onSubmit={props.editSubmit}>
       <EditInput
-        onChange={handleEditChange}
+        onChange={props.editChange}
         type="text"
-        defaultValue={todo.content}
+        defaultValue={props.content}
       />
     </form>
   );
