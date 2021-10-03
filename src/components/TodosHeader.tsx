@@ -26,7 +26,7 @@ export default function TodosHeader() {
       dispatch({ type: 'CREATE_TODO', content: value });
       setValue('');
     },
-    [value],
+    [dispatch, value],
   );
 
   return (
