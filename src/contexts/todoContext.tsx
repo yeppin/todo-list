@@ -1,6 +1,7 @@
-import React, { createContext, Dispatch, useContext, useReducer } from 'react';
 import * as api from '../api/todo';
-import { Todo, Status } from '../types/Todo';
+
+import React, { Dispatch, createContext, useContext, useReducer } from 'react';
+import { Status, Todo } from '../types/Todo';
 
 type TodoState = {
   todos: Todo[];
@@ -8,10 +9,12 @@ type TodoState = {
 };
 
 type Action =
-  | { type: 'CREATE_TODO'; todo: Todo }
-  | { type: 'UPDATE_TODO'; todo: Todo }
+  | { type: 'GET_TODO' }
+  | { type: 'CREATE_TODO'; content: string }
+  | { type: 'UPDATE_TODO'; content: string }
   | { type: 'DELETE_TODO'; id: number }
   | { type: 'TOGGLE_COMPLETED'; id: number }
+  | { type: 'TOGGLE_ALL_COMPLETED'; completed: boolean }
   | { type: 'CHANGE_STATUS'; status: Status };
 
 type TodoDispatch = Dispatch<Action>;
@@ -23,13 +26,16 @@ const initialState = {
 
 const reducer = (state: TodoState, action: Action): TodoState => {
   switch (action.type) {
-    case 'CREATE_TODO':
-      api.createTodo(action.todo.content);
-      const created = api.getTodos();
+    case 'GET_TODO':
       return {
         ...state,
-        // TODO: todo가 생성 되었을 때 action.todo 값을 이용하여 todos 가 업데이트 되도록 수정하기
-        todos: created,
+        todos: api.getTodos(),
+      };
+    case 'CREATE_TODO':
+      api.createTodo(action.content);
+      return {
+        ...state,
+        todos: api.getTodos(),
       };
     case 'UPDATE_TODO':
       api.updateTodo(action.todo);
@@ -50,8 +56,12 @@ const reducer = (state: TodoState, action: Action): TodoState => {
     case 'TOGGLE_COMPLETED':
       return {
         ...state,
-        // TODO: todo의 completed 값이 토글 되었을 때 action.id 값을 이용하여 todos 가 업데이트 되도록 수정하기
-        // todos:
+        todos: api.toggleTodo(action.id),
+      };
+    case 'TOGGLE_ALL_COMPLETED':
+      return {
+        ...state,
+        todos: api.toggleTodos(action.completed),
       };
     case 'CHANGE_STATUS':
       return {
@@ -61,12 +71,12 @@ const reducer = (state: TodoState, action: Action): TodoState => {
         // todos:
       };
     default:
-      return state;
+      throw new Error('Unhandled action');
   }
 };
 
-const TodoStateContext = createContext<TodoState | null>(null);
-const TodoDispatchContext = createContext<TodoDispatch | null>(null);
+const TodoStateContext = createContext<TodoState>(null as any);
+const TodoDispatchContext = createContext<TodoDispatch>(null as any);
 
 const TodoProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
