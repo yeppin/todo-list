@@ -14,7 +14,7 @@ export default function TodoList() {
   return (
     <Todos>
       {todos.map(todo => (
-        <TodoItem key={todo.id} todo={todo} />
+        <TodoItem key={todo.id} todo={todo} isEditing={false} />
       ))}
     </Todos>
   );

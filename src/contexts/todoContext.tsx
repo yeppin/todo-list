@@ -11,7 +11,7 @@ type TodoState = {
 type Action =
   | { type: 'GET_TODO' }
   | { type: 'CREATE_TODO'; content: string }
-  | { type: 'UPDATE_TODO'; content: string }
+  | { type: 'UPDATE_TODO'; id: number; content: string }
   | { type: 'DELETE_TODO'; id: number }
   | { type: 'TOGGLE_COMPLETED'; id: number }
   | { type: 'TOGGLE_ALL_COMPLETED'; completed: boolean }
@@ -41,13 +41,15 @@ const reducer = (state: TodoState, action: Action): TodoState => {
       return {
         ...state,
         // TODO: todo가 업데이트 되었을 때 action.todo 값을 이용하여 todos 가 업데이트 되도록 수정하기
-        // todos:
+        todos: api.updateTodo(action.id, action.content),
       };
     case 'DELETE_TODO':
+      api.deleteTodo(action.id);
+      const deleted = api.getTodos();
       return {
         ...state,
         // TODO: todo가 삭제 되었을 때 action.id 값을 이용하여 todos 가 삭제 되도록 수정하기
-        // todos:
+        todos: deleted,
       };
     case 'TOGGLE_COMPLETED':
       return {

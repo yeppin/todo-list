@@ -22,14 +22,15 @@ export const createTodo = (content: string): Todo[] => {
   return todos;
 };
 
-export const updateTodo = (_todo: Todo): Todo[] => {
+export const updateTodo = (_id: number, content: string): Todo[] => {
   const todos = getTodos();
   const updatedTodos = todos.map(todo => {
-    if (todo.id !== _todo.id) {
+    if (todo.id !== _id) {
       return todo;
     }
     return {
-      ..._todo,
+      ...todo,
+      content: content,
       updateDatetime: new Date().toString(),
     };
   });

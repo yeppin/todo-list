@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { useTodoDispatch } from '../contexts/todoContext';
 import { Todo } from '../types/Todo';
+import { useTodoDispatch } from '../contexts/todoContext';
+import UpdateForm from './UpdateForm';
 
 type todoProps = {
   checked: boolean;
@@ -9,21 +10,44 @@ type todoProps = {
 
 export type TodoItemProps = {
   todo: Todo;
+  isEditing: boolean;
 };
 
-export default function TodoItem({ todo }: TodoItemProps) {
+export default function TodoItem({ todo, isEditing }: TodoItemProps) {
   const dispatch = useTodoDispatch();
   const { id, completed, content } = todo;
-
+  const [updatedContent, setContent] = useState(content);
+  const [edit, setEdit] = useState(isEditing);
   const handleClick = () => {
     dispatch({ type: 'TOGGLE_COMPLETED', id });
   };
+  const handleDoubleClick = () => {
+    setEdit(true);
+  };
 
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContent(e.target.value);
+  };
+
+  const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault;
+    dispatch({ type: 'UPDATE_TODO', id, content: updatedContent });
+    setEdit(false);
+  };
   return (
     <Container>
       <CheckBox checked={completed} onClick={handleClick} />
-      <Content checked={completed}>{content}</Content>
-      <Delete />
+      {edit ? (
+        <UpdateForm
+          editSubmit={handleEditSubmit}
+          editChange={handleEditChange}
+          content={updatedContent}
+        />
+      ) : (
+        <Content onDoubleClick={handleDoubleClick} checked={completed}>
+          {content}
+        </Content>
+      )}
     </Container>
   );
 }
@@ -38,6 +62,18 @@ const CheckBox = styled.button<todoProps>`
     props.checked
       ? `url('${CHECKED_IMAGE_URL}')`
       : `url('${UNCHECKED_IMAGE_URL}')`};
+`;
+
+const DeleteButton = styled.span`
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 40px;
+  right: 40px;
+  bottom: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: red;
 `;
 
 const Content = styled.div<todoProps>`
