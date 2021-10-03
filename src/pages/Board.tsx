@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from '@emotion/styled';
 import Header from '../components/Header';
@@ -9,8 +10,8 @@ import TodoProvider from '../contexts/todoContext';
 export default function Board() {
   return (
     <BoardLayout>
-      <Header />
       <TodoProvider>
+        <Header />
         <TodosHeader />
         <TodoList />
         <TodosFooter />

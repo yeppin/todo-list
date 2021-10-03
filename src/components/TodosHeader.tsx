@@ -1,25 +1,45 @@
-import React from 'react';
-import styled from '@emotion/styled';
+import React, { useCallback, useState } from 'react';
 import { useTodoDispatch, useTodoState } from '../contexts/todoContext';
+
+import styled from '@emotion/styled';
 
 type toggleCheckAllProps = {
   checked: boolean;
 };
 
 export default function TodosHeader() {
+  const [value, setValue] = useState('');
   const { todos } = useTodoState();
   const dispatch = useTodoDispatch();
-
   const isAllCompleted = todos.every(todo => todo.completed);
-
   const handleAllCompleted = () => {
     dispatch({ type: 'TOGGLE_ALL_COMPLETED', completed: !isAllCompleted });
   };
 
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  }, []);
+
+  const onSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      dispatch({ type: 'CREATE_TODO', content: value });
+      setValue('');
+    },
+    [dispatch, value],
+  );
+
   return (
     <Container>
       <ToggleCheckAll checked={isAllCompleted} onClick={handleAllCompleted} />
-      <Input placeholder="할일을 입력해 보세요!" />
+      <InputWrapper onSubmit={onSubmit}>
+        <Input
+          value={value}
+          type="text"
+          onChange={onChange}
+          placeholder="할일을 입력해 보세요!"
+        />
+      </InputWrapper>
     </Container>
   );
 }
@@ -40,6 +60,12 @@ const ToggleCheckAll = styled.button<toggleCheckAllProps>`
   &::before {
     content: '❯';
   }
+`;
+
+const InputWrapper = styled.form`
+  width: calc(100% - 95px);
+  height: 65px;
+  padding: 15px;
 `;
 
 const Input = styled.input`
